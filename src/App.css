@@ -40,3 +40,78 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  #root {
+    padding: 0;
+    max-width: 100%;
+  }
+  
+  /* Improve touch targets */
+  button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Smooth scrolling for mobile */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Prevent zoom on input focus */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  
+  /* Better modal experience on mobile */
+  [data-radix-dialog-content] {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  /* Improve horizontal scrolling */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Better button spacing on mobile */
+  .space-y-6 > * + * {
+    margin-top: 1.5rem;
+  }
+  
+  /* Improve card shadows on mobile */
+  .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Better text readability on mobile */
+  .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  /* Improve spacing for mobile */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Dark mode support for mobile */
+@media (prefers-color-scheme: dark) {
+  .bg-muted {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border {
+    border-width: 2px;
+  }
+  
+  .text-muted-foreground {
+    color: #666;
+  }
+}
