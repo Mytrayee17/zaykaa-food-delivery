@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-31T16:19:40.559Z",
+  "lastUpdated": "2025-07-31T16:36:53.919Z",
   "items": [
     {
       "id": "1",
@@ -88,9 +88,20 @@
       "rating": 4.1,
       "isVeg": true,
       "isOffer": false
+    },
+        {
+      "id": "9",
+      "name": "guu",
+      "description": "yuuu",
+      "price": 1,
+      "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+      "category": "Snacks",
+      "rating": 4.1,
+      "isVeg": true,
+      "isOffer": true
     }
   ],
-  "totalItems": 8,
+  "totalItems": 9,
   "categories": [
     "Main Course",
     "Rice",
@@ -100,6 +111,6 @@
     "Dessert",
     "Beverage"
   ],
-  "offers": 3,
-  "vegItems": 5
+  "offers": 4,
+  "vegItems": 6
 }
