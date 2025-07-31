@@ -5,7 +5,7 @@ import { AdminMenuList } from '@/components/admin/AdminMenuList';
 import { useMenuData } from '@/hooks/useMenuData';
 import { useAdmin } from '@/context/AdminContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, ArrowLeft, LogOut, Download, Code } from 'lucide-react';
+import { Shield, ArrowLeft, LogOut, Save, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -21,19 +21,20 @@ const AdminPage: React.FC = () => {
     updateMenuItem,
     deleteMenuItem,
     resetToDefaults,
-    exportMenuData,
-    generateTypeScriptCode
+    saveAsDefault,
+    getMenuStats
   } = useMenuData();
 
-  const handleExportData = () => {
-    const data = exportMenuData();
-    alert(`Menu data exported! Total items: ${data.totalItems}`);
+  const handleSaveAsDefault = () => {
+    const confirmed = window.confirm(
+      'Save current menu as default? This will make all users see this updated menu.'
+    );
+    if (confirmed) {
+      saveAsDefault();
+    }
   };
 
-  const handleGenerateCode = () => {
-    generateTypeScriptCode();
-    alert('TypeScript code generated! Download the foodItems.ts file and replace the existing one.');
-  };
+  const stats = getMenuStats();
 
   // Redirect if not admin (in production, you'd want proper authentication)
   if (!isAdmin) {
@@ -116,42 +117,57 @@ const AdminPage: React.FC = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              onClick={handleExportData}
+              onClick={handleSaveAsDefault}
               className="border-white hover:bg-white/10 text-white"
             >
-              <Download className="h-4 w-4 mr-2" />
-              Export Data
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleGenerateCode}
-              className="border-white hover:bg-white/10 text-white"
-            >
-              <Code className="h-4 w-4 mr-2" />
-              Generate Code
+              <Save className="h-4 w-4 mr-2" />
+              Save as Default
             </Button>
           </div>
         </div>
 
-        {/* Export Instructions */}
+        {/* Menu Statistics */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle className="text-lg">📝 How to Update Code Files</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <BarChart3 className="h-5 w-5" />
+              Menu Statistics
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">{stats.totalItems}</div>
+                <div className="text-sm text-muted-foreground">Total Items</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-orange-500">{stats.offers}</div>
+                <div className="text-sm text-muted-foreground">Offers</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-500">{stats.vegItems}</div>
+                <div className="text-sm text-muted-foreground">Veg Items</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-500">{stats.categories.length}</div>
+                <div className="text-sm text-muted-foreground">Categories</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Simple Instructions */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="text-lg">💡 How to Update Menu for All Users</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="text-sm text-muted-foreground">
-              After making changes to the menu, use these steps to update the code:
+              After making changes to the menu, click <strong>"Save as Default"</strong> to make the changes visible to all users.
             </p>
-            <ol className="text-sm space-y-2 list-decimal list-inside">
-              <li>Click <strong>"Generate Code"</strong> to download the updated foodItems.ts file</li>
-              <li>Replace the existing <code>src/data/foodItems.ts</code> file with the downloaded one</li>
-              <li>Commit and push the changes to GitHub</li>
-              <li>Deploy the updated application</li>
-            </ol>
-            <div className="bg-blue-50 p-3 rounded-lg">
-              <p className="text-sm text-blue-800">
-                💡 <strong>Tip:</strong> This ensures all users see the updated menu when they visit your deployed application.
+            <div className="bg-green-50 p-3 rounded-lg">
+              <p className="text-sm text-green-800">
+                ✅ <strong>Simple:</strong> Just click "Save as Default" and all users will see your updated menu!
               </p>
             </div>
           </CardContent>

@@ -4,6 +4,7 @@ import { foodItems as defaultFoodItems } from '@/data/foodItems';
 
 const STORAGE_KEY = 'zaykaaMenu';
 const SHARED_STORAGE_KEY = 'zaykaaSharedMenu';
+const DEFAULT_STORAGE_KEY = 'zaykaaDefaultMenu';
 
 export const useMenuData = () => {
   const [menuItems, setMenuItems] = useState<FoodItem[]>([]);
@@ -23,6 +24,21 @@ export const useMenuData = () => {
           return;
         } catch (error) {
           console.error('Error loading shared menu:', error);
+        }
+      }
+
+      // Check for saved default menu
+      const savedDefault = localStorage.getItem(DEFAULT_STORAGE_KEY);
+      if (savedDefault) {
+        try {
+          const parsedDefault = JSON.parse(savedDefault);
+          setMenuItems(parsedDefault);
+          // Also save to local and shared storage
+          localStorage.setItem(STORAGE_KEY, savedDefault);
+          localStorage.setItem(SHARED_STORAGE_KEY, savedDefault);
+          return;
+        } catch (error) {
+          console.error('Error loading saved default menu:', error);
         }
       }
 
@@ -108,66 +124,28 @@ export const useMenuData = () => {
     }
   };
 
-  // Export current menu data for code file update
-  const exportMenuData = () => {
-    const exportData = {
-      timestamp: new Date().toISOString(),
-      items: menuItems,
+  // Simple function to save current menu as the new default
+  const saveAsDefault = () => {
+    try {
+      const itemsJson = JSON.stringify(menuItems);
+      localStorage.setItem(DEFAULT_STORAGE_KEY, itemsJson);
+      alert(`✅ Menu saved as default! All users will now see this updated menu.`);
+      return true;
+    } catch (error) {
+      console.error('Error saving as default:', error);
+      alert('❌ Error saving menu as default. Please try again.');
+      return false;
+    }
+  };
+
+  // Function to get current menu statistics
+  const getMenuStats = () => {
+    return {
       totalItems: menuItems.length,
       categories: Array.from(new Set(menuItems.map(item => item.category))),
       offers: menuItems.filter(item => item.isOffer).length,
       vegItems: menuItems.filter(item => item.isVeg).length
     };
-
-    // Create downloadable file
-    const dataStr = JSON.stringify(exportData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `zaykaa-menu-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    return exportData;
-  };
-
-  // Generate TypeScript code for foodItems.ts
-  const generateTypeScriptCode = () => {
-    const itemsCode = menuItems.map(item => `  {
-    id: '${item.id}',
-    name: '${item.name}',
-    description: '${item.description}',
-    price: ${item.price},
-    image: '${item.image}',
-    category: '${item.category}',
-    rating: ${item.rating},
-    isVeg: ${item.isVeg},
-    isOffer: ${item.isOffer},
-  }`).join(',\n');
-
-    const fullCode = `import { FoodItem } from '@/types/food';
-
-export const foodItems: FoodItem[] = [
-${itemsCode}
-];`;
-
-    // Create downloadable TypeScript file
-    const dataBlob = new Blob([fullCode], { type: 'text/plain' });
-    const url = URL.createObjectURL(dataBlob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'foodItems.ts';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    return fullCode;
   };
 
   return {
@@ -178,7 +156,7 @@ ${itemsCode}
     deleteMenuItem,
     resetToDefaults,
     syncWithSharedData,
-    exportMenuData,
-    generateTypeScriptCode
+    saveAsDefault,
+    getMenuStats
   };
 };
