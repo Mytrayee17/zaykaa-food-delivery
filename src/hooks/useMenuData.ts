@@ -3,6 +3,7 @@ import { FoodItem } from '@/types/food';
 import { foodItems as defaultFoodItems } from '@/data/foodItems';
 
 const STORAGE_KEY = 'zaykaaMenu';
+const SHARED_STORAGE_KEY = 'zaykaaSharedMenu';
 
 export const useMenuData = () => {
   const [menuItems, setMenuItems] = useState<FoodItem[]>([]);
@@ -10,24 +11,45 @@ export const useMenuData = () => {
 
   // Load menu items from localStorage or use defaults
   useEffect(() => {
-    const savedItems = localStorage.getItem(STORAGE_KEY);
-    if (savedItems) {
-      try {
-        setMenuItems(JSON.parse(savedItems));
-      } catch (error) {
-        console.error('Error loading menu from localStorage:', error);
+    const loadMenuData = () => {
+      // First try to load from shared storage (for cross-user sync)
+      const sharedItems = localStorage.getItem(SHARED_STORAGE_KEY);
+      if (sharedItems) {
+        try {
+          const parsedShared = JSON.parse(sharedItems);
+          setMenuItems(parsedShared);
+          // Also save to local storage for backup
+          localStorage.setItem(STORAGE_KEY, sharedItems);
+          return;
+        } catch (error) {
+          console.error('Error loading shared menu:', error);
+        }
+      }
+
+      // Fallback to local storage
+      const savedItems = localStorage.getItem(STORAGE_KEY);
+      if (savedItems) {
+        try {
+          setMenuItems(JSON.parse(savedItems));
+        } catch (error) {
+          console.error('Error loading menu from localStorage:', error);
+          setMenuItems(defaultFoodItems);
+        }
+      } else {
         setMenuItems(defaultFoodItems);
       }
-    } else {
-      setMenuItems(defaultFoodItems);
-    }
+    };
+
+    loadMenuData();
     setLoading(false);
   }, []);
 
-  // Save to localStorage whenever menuItems change
+  // Save to both local and shared storage for cross-user sync
   const saveToStorage = (items: FoodItem[]) => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      const itemsJson = JSON.stringify(items);
+      localStorage.setItem(STORAGE_KEY, itemsJson);
+      localStorage.setItem(SHARED_STORAGE_KEY, itemsJson);
       setMenuItems(items);
     } catch (error) {
       console.error('Error saving menu to localStorage:', error);
@@ -72,12 +94,27 @@ export const useMenuData = () => {
     saveToStorage(defaultFoodItems);
   };
 
+  // Function to sync with shared data (can be called periodically)
+  const syncWithSharedData = () => {
+    const sharedItems = localStorage.getItem(SHARED_STORAGE_KEY);
+    if (sharedItems) {
+      try {
+        const parsedShared = JSON.parse(sharedItems);
+        setMenuItems(parsedShared);
+        localStorage.setItem(STORAGE_KEY, sharedItems);
+      } catch (error) {
+        console.error('Error syncing with shared data:', error);
+      }
+    }
+  };
+
   return {
     menuItems,
     loading,
     addMenuItem,
     updateMenuItem,
     deleteMenuItem,
-    resetToDefaults
+    resetToDefaults,
+    syncWithSharedData
   };
 };

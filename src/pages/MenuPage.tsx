@@ -1,14 +1,32 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Header from '@/components/Header';
 import FoodCard from '@/components/FoodCard';
 import CategoryFilter from '@/components/CategoryFilter';
 import OrderModal from '@/components/OrderModal';
 import Footer from '@/components/Footer';
 import { useMenuData } from '@/hooks/useMenuData';
+import { Button } from '@/components/ui/button';
+import { RefreshCw } from 'lucide-react';
 
 const MenuPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const { menuItems, loading } = useMenuData();
+  const [isSyncing, setIsSyncing] = useState(false);
+  const { menuItems, loading, syncWithSharedData } = useMenuData();
+
+  // Auto-sync with shared data every 30 seconds
+  useEffect(() => {
+    const syncInterval = setInterval(() => {
+      syncWithSharedData();
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(syncInterval);
+  }, [syncWithSharedData]);
+
+  const handleManualSync = async () => {
+    setIsSyncing(true);
+    syncWithSharedData();
+    setTimeout(() => setIsSyncing(false), 1000);
+  };
 
   const categories = useMemo(() => {
     return Array.from(new Set(menuItems.map(item => item.category)));
@@ -41,9 +59,21 @@ const MenuPage: React.FC = () => {
       <main className="container mx-auto px-4 py-6">
         {/* Category Filter */}
         <div className="mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-foreground text-center sm:text-left">
-            Our Menu
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+              Our Menu
+            </h2>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleManualSync}
+              disabled={isSyncing}
+              className="flex items-center gap-2"
+            >
+              <RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
+              {isSyncing ? 'Syncing...' : 'Sync'}
+            </Button>
+          </div>
           <CategoryFilter
             categories={categories}
             selectedCategory={selectedCategory}
