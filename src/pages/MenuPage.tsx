@@ -6,25 +6,25 @@ import OrderModal from '@/components/OrderModal';
 import Footer from '@/components/Footer';
 import { useMenuData } from '@/hooks/useMenuData';
 import { Button } from '@/components/ui/button';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Clock } from 'lucide-react';
 
 const MenuPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
-  const { menuItems, loading, syncWithSharedData } = useMenuData();
+  const { menuItems, loading, syncWithGitHub, lastSync } = useMenuData();
 
-  // Auto-sync with shared data every 30 seconds
+  // Auto-sync with GitHub data every 30 seconds
   useEffect(() => {
     const syncInterval = setInterval(() => {
-      syncWithSharedData();
-    }, 30000); // 30 seconds
+      syncWithGitHub();
+    }, 30000);
 
     return () => clearInterval(syncInterval);
-  }, [syncWithSharedData]);
+  }, [syncWithGitHub]);
 
   const handleManualSync = async () => {
     setIsSyncing(true);
-    syncWithSharedData();
+    await syncWithGitHub();
     setTimeout(() => setIsSyncing(false), 1000);
   };
 
@@ -63,16 +63,24 @@ const MenuPage: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
               Our Menu
             </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleManualSync}
-              disabled={isSyncing}
-              className="flex items-center gap-2"
-            >
-              <RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
-              {isSyncing ? 'Syncing...' : 'Sync'}
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleManualSync}
+                disabled={isSyncing}
+                className="flex items-center gap-2"
+              >
+                <RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
+                {isSyncing ? 'Syncing...' : 'Sync'}
+              </Button>
+              {lastSync && (
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3" />
+                  <span>Updated: {lastSync.toLocaleTimeString()}</span>
+                </div>
+              )}
+            </div>
           </div>
           <CategoryFilter
             categories={categories}

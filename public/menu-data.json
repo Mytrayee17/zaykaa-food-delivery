@@ -1,0 +1,97 @@
+{
+  "lastUpdated": "2024-01-01T00:00:00.000Z",
+  "items": [
+    {
+      "id": "1",
+      "name": "Butter Chicken",
+      "description": "Rich and creamy tomato-based curry with tender chicken pieces",
+      "price": 280,
+      "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&h=300&fit=crop",
+      "category": "Main Course",
+      "rating": 4.5,
+      "isVeg": false,
+      "isOffer": true
+    },
+    {
+      "id": "2",
+      "name": "Paneer Tikka Masala",
+      "description": "Grilled cottage cheese in a spicy tomato-onion gravy",
+      "price": 240,
+      "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=400&h=300&fit=crop",
+      "category": "Main Course",
+      "rating": 4.3,
+      "isVeg": true,
+      "isOffer": false
+    },
+    {
+      "id": "3",
+      "name": "Biryani Special",
+      "description": "Aromatic basmati rice with tender meat and exotic spices",
+      "price": 320,
+      "image": "https://images.unsplash.com/photo-1563379091339-03246963d29c?w=400&h=300&fit=crop",
+      "category": "Rice",
+      "rating": 4.8,
+      "isVeg": false,
+      "isOffer": true
+    },
+    {
+      "id": "4",
+      "name": "Tandoori Roti",
+      "description": "Freshly baked whole wheat bread in traditional tandoor",
+      "price": 35,
+      "image": "https://images.unsplash.com/photo-1619221882104-cefd4828166e?w=400&h=300&fit=crop",
+      "category": "Bread",
+      "rating": 4.2,
+      "isVeg": true,
+      "isOffer": false
+    },
+    {
+      "id": "5",
+      "name": "Dal Makhani",
+      "description": "Slow-cooked black lentils in a rich creamy gravy",
+      "price": 180,
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+      "category": "Dal",
+      "rating": 4.4,
+      "isVeg": true,
+      "isOffer": false
+    },
+    {
+      "id": "6",
+      "name": "Chicken Seekh Kebab",
+      "description": "Spiced minced chicken grilled to perfection",
+      "price": 220,
+      "image": "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
+      "category": "Starter",
+      "rating": 4.6,
+      "isVeg": false,
+      "isOffer": true
+    },
+    {
+      "id": "7",
+      "name": "Gulab Jamun",
+      "description": "Soft milk dumplings in sweet cardamom-flavored syrup",
+      "price": 120,
+      "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
+      "category": "Dessert",
+      "rating": 4.7,
+      "isVeg": true,
+      "isOffer": false
+    },
+    {
+      "id": "8",
+      "name": "Masala Chai",
+      "description": "Traditional Indian spiced tea with milk and aromatic spices",
+      "price": 40,
+      "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+      "category": "Beverage",
+      "rating": 4.1,
+      "isVeg": true,
+      "isOffer": false
+    }
+  ],
+  "totalItems": 8,
+  "categories": ["Main Course", "Rice", "Bread", "Dal", "Starter", "Dessert", "Beverage"],
+  "offers": 3,
+  "vegItems": 5
+} 
