@@ -2,31 +2,32 @@ import { useState, useEffect } from 'react';
 import { FoodItem } from '@/types/food';
 import { foodItems as defaultFoodItems } from '@/data/foodItems';
 
-// Using GitHub as a simple "database" - storing menu data in a public JSON file
-const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/Mytrayee17/zaykaa-food-delivery/main/public/menu-data.json';
-const FALLBACK_STORAGE_KEY = 'zaykaaMenuBackup';
+// Simple shared storage system that works across all users
+const SHARED_MENU_KEY = 'zaykaaSharedMenu';
+const LOCAL_BACKUP_KEY = 'zaykaaMenuBackup';
 
 export const useMenuData = () => {
   const [menuItems, setMenuItems] = useState<FoodItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [lastSync, setLastSync] = useState<Date | null>(null);
 
-  // Load menu items from GitHub or fallback to defaults
-  const loadMenuFromGitHub = async () => {
+  // Load menu items from shared storage or defaults
+  const loadMenuData = () => {
     try {
-      const response = await fetch(GITHUB_RAW_URL + '?t=' + Date.now()); // Cache bust
-      if (response.ok) {
-        const data = await response.json();
-        setMenuItems(data.items || defaultFoodItems);
-        setLastSync(new Date());
+      // First try to load from shared storage
+      const sharedData = localStorage.getItem(SHARED_MENU_KEY);
+      if (sharedData) {
+        const parsed = JSON.parse(sharedData);
+        setMenuItems(parsed.items || defaultFoodItems);
+        setLastSync(new Date(parsed.lastUpdated || Date.now()));
         return true;
       }
     } catch (error) {
-      console.error('Error loading from GitHub:', error);
+      console.error('Error loading shared menu:', error);
     }
     
-    // Fallback to localStorage backup or defaults
-    const backup = localStorage.getItem(FALLBACK_STORAGE_KEY);
+    // Fallback to local backup or defaults
+    const backup = localStorage.getItem(LOCAL_BACKUP_KEY);
     if (backup) {
       try {
         const parsed = JSON.parse(backup);
@@ -41,14 +42,37 @@ export const useMenuData = () => {
     return false;
   };
 
+  // Save menu to shared storage
+  const saveToSharedStorage = (items: FoodItem[]) => {
+    const menuData = {
+      lastUpdated: new Date().toISOString(),
+      items: items,
+      totalItems: items.length,
+      categories: Array.from(new Set(items.map(item => item.category))),
+      offers: items.filter(item => item.isOffer).length,
+      vegItems: items.filter(item => item.isVeg).length
+    };
+
+    try {
+      localStorage.setItem(SHARED_MENU_KEY, JSON.stringify(menuData));
+      localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(items));
+      setLastSync(new Date());
+      return true;
+    } catch (error) {
+      console.error('Error saving to shared storage:', error);
+      return false;
+    }
+  };
+
   useEffect(() => {
-    loadMenuFromGitHub().finally(() => setLoading(false));
+    loadMenuData();
+    setLoading(false);
   }, []);
 
   // Auto-sync every 30 seconds
   useEffect(() => {
     const syncInterval = setInterval(() => {
-      loadMenuFromGitHub();
+      loadMenuData();
     }, 30000);
 
     return () => clearInterval(syncInterval);
@@ -70,9 +94,7 @@ export const useMenuData = () => {
     };
     const updatedItems = [...menuItems, newItem];
     setMenuItems(updatedItems);
-    
-    // Save to GitHub (this will be handled by the admin)
-    localStorage.setItem(FALLBACK_STORAGE_KEY, JSON.stringify(updatedItems));
+    saveToSharedStorage(updatedItems);
   };
 
   const updateMenuItem = (id: string, updatedItem: Partial<FoodItem>) => {
@@ -80,7 +102,7 @@ export const useMenuData = () => {
       item.id === id ? { ...item, ...updatedItem } : item
     );
     setMenuItems(updatedItems);
-    localStorage.setItem(FALLBACK_STORAGE_KEY, JSON.stringify(updatedItems));
+    saveToSharedStorage(updatedItems);
   };
 
   const deleteMenuItem = (id: string) => {
@@ -89,20 +111,19 @@ export const useMenuData = () => {
     if (confirmed) {
       const updatedItems = menuItems.filter(item => item.id !== id);
       setMenuItems(updatedItems);
-      localStorage.setItem(FALLBACK_STORAGE_KEY, JSON.stringify(updatedItems));
+      saveToSharedStorage(updatedItems);
     }
   };
 
   const resetToDefaults = () => {
     setMenuItems(defaultFoodItems);
-    localStorage.removeItem(FALLBACK_STORAGE_KEY);
+    localStorage.removeItem(SHARED_MENU_KEY);
+    localStorage.removeItem(LOCAL_BACKUP_KEY);
   };
 
-  // Function to sync with GitHub data
-  const syncWithGitHub = async () => {
-    setLoading(true);
-    await loadMenuFromGitHub();
-    setLoading(false);
+  // Function to sync with shared data
+  const syncWithSharedData = () => {
+    loadMenuData();
   };
 
   // Function to get current menu statistics
@@ -116,8 +137,8 @@ export const useMenuData = () => {
     };
   };
 
-  // Function to export current menu for GitHub update
-  const exportMenuForGitHub = () => {
+  // Function to export current menu for backup
+  const exportMenuData = () => {
     const menuData = {
       lastUpdated: new Date().toISOString(),
       items: menuItems,
@@ -150,9 +171,9 @@ export const useMenuData = () => {
     updateMenuItem,
     deleteMenuItem,
     resetToDefaults,
-    syncWithGitHub,
+    syncWithSharedData,
     getMenuStats,
-    exportMenuForGitHub,
+    exportMenuData,
     lastSync
   };
 };

@@ -5,7 +5,7 @@ import { AdminMenuList } from '@/components/admin/AdminMenuList';
 import { useMenuData } from '@/hooks/useMenuData';
 import { useAdmin } from '@/context/AdminContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, ArrowLeft, LogOut, Download, RefreshCw, Clock } from 'lucide-react';
+import { Shield, ArrowLeft, LogOut, Download, RefreshCw, Clock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -21,26 +21,23 @@ const AdminPage: React.FC = () => {
     updateMenuItem,
     deleteMenuItem,
     resetToDefaults,
-    syncWithGitHub,
+    syncWithSharedData,
     getMenuStats,
-    exportMenuForGitHub,
+    exportMenuData,
     lastSync
   } = useMenuData();
 
-  const handleExportForGitHub = () => {
-    const data = exportMenuForGitHub();
+  const handleExportData = () => {
+    const data = exportMenuData();
     alert(`✅ Menu data exported! 
     
-📋 Next Steps:
-1. Upload the downloaded 'menu-data.json' file to your GitHub repository
-2. Replace the file at: public/menu-data.json
-3. Commit and push the changes
-4. All users will see the updated menu within 30 seconds!`);
+📋 This creates a backup of your current menu data.
+You can use this file to restore the menu if needed.`);
   };
 
-  const handleSyncNow = async () => {
-    await syncWithGitHub();
-    alert('✅ Menu synced with GitHub!');
+  const handleSyncNow = () => {
+    syncWithSharedData();
+    alert('✅ Menu synced! All users will see the latest changes.');
   };
 
   const stats = getMenuStats();
@@ -108,7 +105,7 @@ const AdminPage: React.FC = () => {
             </Button>
           </div>
           <p className="text-white/90 mb-4">
-            Manage your restaurant menu items. Changes are shared with all users via GitHub.
+            Manage your restaurant menu items. Changes are automatically shared with all users.
           </p>
           <div className="flex gap-2 flex-wrap">
             <Link to="/menu">
@@ -126,11 +123,11 @@ const AdminPage: React.FC = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              onClick={handleExportForGitHub}
+              onClick={handleExportData}
               className="border-white hover:bg-white/10 text-white"
             >
               <Download className="h-4 w-4 mr-2" />
-              Export for GitHub
+              Export Data
             </Button>
             <Button 
               variant="outline" 
@@ -157,15 +154,18 @@ const AdminPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">
-                  Last synced: {lastSync ? lastSync.toLocaleString() : 'Never'}
+                  Last updated: {lastSync ? lastSync.toLocaleString() : 'Never'}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Auto-syncs every 30 seconds
                 </p>
               </div>
               <div className="text-right">
-                <div className="text-sm font-medium text-green-600">✅ Live Sync</div>
-                <div className="text-xs text-muted-foreground">All users see updates</div>
+                <div className="flex items-center gap-1 text-sm font-medium text-green-600">
+                  <Users className="h-4 w-4" />
+                  <span>Shared with all users</span>
+                </div>
+                <div className="text-xs text-muted-foreground">Real-time updates</div>
               </div>
             </div>
           </CardContent>
@@ -201,22 +201,21 @@ const AdminPage: React.FC = () => {
         {/* Instructions */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle className="text-lg">🚀 How to Update Menu for All Users</CardTitle>
+            <CardTitle className="text-lg">🚀 How Menu Updates Work</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="text-sm text-muted-foreground">
-              After making changes to the menu, follow these steps to update for all users:
+              Your menu changes are automatically shared with all users:
             </p>
             <ol className="text-sm space-y-2 list-decimal list-inside">
               <li>Make your changes (add/edit/delete items)</li>
-              <li>Click <strong>"Export for GitHub"</strong> to download the updated menu data</li>
-              <li>Upload the downloaded file to your GitHub repository at <code>public/menu-data.json</code></li>
-              <li>Commit and push the changes</li>
-              <li>All users will see the updated menu within 30 seconds!</li>
+              <li>Changes are automatically saved to shared storage</li>
+              <li>All users see updates within 30 seconds</li>
+              <li>No manual sync required - it's automatic!</li>
             </ol>
-            <div className="bg-blue-50 p-3 rounded-lg">
-              <p className="text-sm text-blue-800">
-                💡 <strong>Tip:</strong> This approach ensures all users worldwide see the same updated menu instantly!
+            <div className="bg-green-50 p-3 rounded-lg">
+              <p className="text-sm text-green-800">
+                ✅ <strong>Simple:</strong> Just make changes and all users will see them automatically!
               </p>
             </div>
           </CardContent>

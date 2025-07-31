@@ -11,20 +11,20 @@ import { RefreshCw, Clock } from 'lucide-react';
 const MenuPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
-  const { menuItems, loading, syncWithGitHub, lastSync } = useMenuData();
+  const { menuItems, loading, syncWithSharedData, lastSync } = useMenuData();
 
-  // Auto-sync with GitHub data every 30 seconds
+  // Auto-sync with shared data every 30 seconds
   useEffect(() => {
     const syncInterval = setInterval(() => {
-      syncWithGitHub();
+      syncWithSharedData();
     }, 30000);
 
     return () => clearInterval(syncInterval);
-  }, [syncWithGitHub]);
+  }, [syncWithSharedData]);
 
-  const handleManualSync = async () => {
+  const handleManualSync = () => {
     setIsSyncing(true);
-    await syncWithGitHub();
+    syncWithSharedData();
     setTimeout(() => setIsSyncing(false), 1000);
   };
 
