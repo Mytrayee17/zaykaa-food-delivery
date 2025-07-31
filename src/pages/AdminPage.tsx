@@ -5,9 +5,10 @@ import { AdminMenuList } from '@/components/admin/AdminMenuList';
 import { useMenuData } from '@/hooks/useMenuData';
 import { useAdmin } from '@/context/AdminContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, ArrowLeft, LogOut } from 'lucide-react';
+import { Shield, ArrowLeft, LogOut, Download, Code } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+
 const AdminPage: React.FC = () => {
   const {
     isAdmin,
@@ -19,8 +20,20 @@ const AdminPage: React.FC = () => {
     addMenuItem,
     updateMenuItem,
     deleteMenuItem,
-    resetToDefaults
+    resetToDefaults,
+    exportMenuData,
+    generateTypeScriptCode
   } = useMenuData();
+
+  const handleExportData = () => {
+    const data = exportMenuData();
+    alert(`Menu data exported! Total items: ${data.totalItems}`);
+  };
+
+  const handleGenerateCode = () => {
+    generateTypeScriptCode();
+    alert('TypeScript code generated! Download the foodItems.ts file and replace the existing one.');
+  };
 
   // Redirect if not admin (in production, you'd want proper authentication)
   if (!isAdmin) {
@@ -87,7 +100,7 @@ const AdminPage: React.FC = () => {
           <p className="text-white/90 mb-4">
             Manage your restaurant menu items. Add, edit, or remove items from your menu.
           </p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <Link to="/menu">
               <Button variant="secondary" size="sm">
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -100,8 +113,49 @@ const AdminPage: React.FC = () => {
                 Home
               </Button>
             </Link>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleExportData}
+              className="border-white hover:bg-white/10 text-white"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Export Data
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleGenerateCode}
+              className="border-white hover:bg-white/10 text-white"
+            >
+              <Code className="h-4 w-4 mr-2" />
+              Generate Code
+            </Button>
           </div>
         </div>
+
+        {/* Export Instructions */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="text-lg">📝 How to Update Code Files</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              After making changes to the menu, use these steps to update the code:
+            </p>
+            <ol className="text-sm space-y-2 list-decimal list-inside">
+              <li>Click <strong>"Generate Code"</strong> to download the updated foodItems.ts file</li>
+              <li>Replace the existing <code>src/data/foodItems.ts</code> file with the downloaded one</li>
+              <li>Commit and push the changes to GitHub</li>
+              <li>Deploy the updated application</li>
+            </ol>
+            <div className="bg-blue-50 p-3 rounded-lg">
+              <p className="text-sm text-blue-800">
+                💡 <strong>Tip:</strong> This ensures all users see the updated menu when they visit your deployed application.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Menu Management */}
         <AdminMenuList menuItems={menuItems} onAddItem={addMenuItem} onUpdateItem={updateMenuItem} onDeleteItem={deleteMenuItem} onResetToDefaults={resetToDefaults} />
@@ -110,4 +164,5 @@ const AdminPage: React.FC = () => {
       <Footer />
     </div>;
 };
+
 export default AdminPage;
