@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2024-01-01T00:00:00.000Z",
+  "lastUpdated": "2025-07-31T16:19:40.559Z",
   "items": [
     {
       "id": "1",
@@ -91,7 +91,15 @@
     }
   ],
   "totalItems": 8,
-  "categories": ["Main Course", "Rice", "Bread", "Dal", "Starter", "Dessert", "Beverage"],
+  "categories": [
+    "Main Course",
+    "Rice",
+    "Bread",
+    "Dal",
+    "Starter",
+    "Dessert",
+    "Beverage"
+  ],
   "offers": 3,
   "vegItems": 5
-} 
+}
