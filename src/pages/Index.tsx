@@ -29,7 +29,7 @@ const Index = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <a href="https://wa.me/918639378049" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/918500157859" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" variant="outline" className="border-white hover:bg-white font-semibold text-lg px-8 text-orange-500">
                   Contact Us
                 </Button>
@@ -47,9 +47,9 @@ const Index = () => {
               <div className="bg-gradient-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                 <Clock className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Fast Delivery</h3>
+              <h3 className="text-xl font-semibold mb-2">Orders will Delivery from evening 5:00 PM to 11:00 PM</h3>
               <p className="text-muted-foreground">
-                Hot, fresh food delivered in 30-45 minutes
+                Hot, fresh food delivered in Evening 30-45 minutes
               </p>
             </div>
             

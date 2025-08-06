@@ -14,17 +14,20 @@ const Footer: React.FC = () => {
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span>+91 86393 78049</span>
+                <span>+91 85001 57859</span>
               </div>
               <div className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
-                <a href="https://wa.me/918639378049" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                <a href="https://wa.me/918500157859" target="_blank" rel="noopener noreferrer" className="hover:underline">
                   WhatsApp
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
                 <span>Guntur , Andhra Pradesh</span>
+              </div>
+              <div className="text-xs text-primary-foreground/70 mt-2">
+                <strong>Services provided by Sarvagna Innovations</strong>
               </div>
             </div>
           </div>
@@ -34,7 +37,7 @@ const Footer: React.FC = () => {
             <div className="space-y-2 text-sm">
               <a href="/" className="block hover:underline">Home</a>
               <a href="/menu" className="block hover:underline">Menu</a>
-              <a href="https://wa.me/918639378049" target="_blank" rel="noopener noreferrer" className="block hover:underline">
+              <a href="https://wa.me/918500157859" target="_blank" rel="noopener noreferrer" className="block hover:underline">
                 Order on WhatsApp
               </a>
             </div>

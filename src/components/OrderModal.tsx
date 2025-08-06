@@ -25,7 +25,8 @@ const OrderModal: React.FC = () => {
 
   const handleWhatsAppOrder = () => {
     const orderText = `Hi! I'd like to order:\n\n${selectedItem.name} x ${quantity}\nPrice: ₹${selectedItem.price * quantity}\n\nPlease confirm my order and delivery details.`;
-    const whatsappUrl = `https://wa.me/918639378049?text=${encodeURIComponent(orderText)}`;
+    // Use the new WhatsApp message link and number
+    const whatsappUrl = `https://wa.me/918500157859?text=${encodeURIComponent(orderText)}`;
     window.open(whatsappUrl, '_blank');
     
     addToOrder(selectedItem, quantity);

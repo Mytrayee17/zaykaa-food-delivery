@@ -1,0 +1,3 @@
+[33m7c682d1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Add Health Freak and Beverage filter buttons with TypeScript fixes
+[33m833393d[m Fix menu update system - Replace GitHub-based system with simple shared localStorage - Admin changes now work immediately for all users - Auto-sync every 30 seconds - No complex setup required - Works instantly without external dependencies
+[33mcc2b50e[m Implement GitHub-based shared menu system - Replace localStorage with GitHub JSON file for global menu sharing - Add auto-sync every 30 seconds for real-time updates - Add export functionality for admin to update shared menu data - All users now see the same menu instantly - No more device-specific storage issues
