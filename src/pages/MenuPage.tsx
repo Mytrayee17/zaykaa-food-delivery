@@ -35,6 +35,8 @@ const MenuPage: React.FC = () => {
   const filteredItems = useMemo(() => {
     if (!selectedCategory) return menuItems
     if (selectedCategory === 'Offers') return menuItems.filter(item => item.isOffer)
+    if (selectedCategory === 'Health Freak') return menuItems.filter(item => item.isHealthFreak)
+    if (selectedCategory === 'Beverage') return menuItems.filter(item => item.isBeverage)
     return menuItems.filter(item => item.category === selectedCategory)
   }, [selectedCategory, menuItems])
 

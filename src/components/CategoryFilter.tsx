@@ -38,6 +38,20 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
           >
             Snacks
           </Button>
+          <Button
+            variant={selectedCategory === 'Health Freak' ? 'default' : 'outline'}
+            onClick={() => onCategorySelect('Health Freak')}
+            className="whitespace-nowrap px-4 py-2 text-sm font-medium rounded-full"
+          >
+            Health Freak
+          </Button>
+          <Button
+            variant={selectedCategory === 'Beverage' ? 'default' : 'outline'}
+            onClick={() => onCategorySelect('Beverage')}
+            className="whitespace-nowrap px-4 py-2 text-sm font-medium rounded-full"
+          >
+            Beverage
+          </Button>
         </div>
       </div>
 
@@ -63,6 +77,20 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
           className="mb-2"
         >
           Snacks
+        </Button>
+        <Button
+          variant={selectedCategory === 'Health Freak' ? 'default' : 'outline'}
+          onClick={() => onCategorySelect('Health Freak')}
+          className="mb-2"
+        >
+          Health Freak
+        </Button>
+        <Button
+          variant={selectedCategory === 'Beverage' ? 'default' : 'outline'}
+          onClick={() => onCategorySelect('Beverage')}
+          className="mb-2"
+        >
+          Beverage
         </Button>
       </div>
     </div>
