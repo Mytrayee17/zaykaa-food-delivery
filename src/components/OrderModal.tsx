@@ -23,20 +23,11 @@ const OrderModal: React.FC = () => {
     setQuantity(prev => Math.max(1, prev + delta));
   };
 
-  const handleWhatsAppOrder = () => {
-    const orderText = `Hi! I'd like to order:\n\n${selectedItem.name} x ${quantity}\nPrice: ₹${selectedItem.price * quantity}\n\nPlease confirm my order and delivery details.`;
-    // Use the new WhatsApp message link and number
-    const whatsappUrl = `https://wa.me/918500157859?text=${encodeURIComponent(orderText)}`;
-    window.open(whatsappUrl, '_blank');
-    
+  const handleAddToCart = () => {
     addToOrder(selectedItem, quantity);
     setIsOrderModalOpen(false);
     setQuantity(1);
-    
-    toast({
-      title: "Order sent!",
-      description: "Your order has been sent via WhatsApp. We'll confirm shortly.",
-    });
+    toast({ title: 'Added to cart', description: `${selectedItem.name} x ${quantity}` });
   };
 
   const totalPrice = selectedItem.price * quantity;
@@ -136,18 +127,17 @@ const OrderModal: React.FC = () => {
             </div>
           </div>
 
-          {/* WhatsApp Order Button - Mobile Optimized */}
+          {/* Add to Cart Button */}
           <Button
-            onClick={handleWhatsAppOrder}
-            className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-bold rounded-xl shadow-lg"
+            onClick={handleAddToCart}
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 text-lg font-bold rounded-xl shadow-lg"
             size="lg"
           >
-            <MessageCircle className="mr-3 h-6 w-6" />
-            Order via WhatsApp
+            Add to Cart
           </Button>
           
           <p className="text-center text-sm text-muted-foreground leading-relaxed">
-            Your order will be sent via WhatsApp for quick confirmation and delivery tracking
+            You can review your cart and checkout via WhatsApp from the cart.
           </p>
         </div>
       </DialogContent>

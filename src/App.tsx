@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import MenuPage from "./pages/MenuPage";
 import AdminPage from "./pages/AdminPage";
 import NotFound from "./pages/NotFound";
+import CartSheet from "@/components/CartSheet";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <AdminLoginModal />
+            <CartSheet />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/menu" element={<MenuPage />} />

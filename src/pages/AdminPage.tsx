@@ -21,6 +21,7 @@ const AdminPage: React.FC = () => {
     updateMenuItem,
     deleteMenuItem,
     resetToDefaults,
+    clearCacheAndReload,
     syncWithSharedData,
     getMenuStats,
     exportMenuData,
@@ -38,6 +39,14 @@ You can use this file to restore the menu if needed.`);
   const handleSyncNow = () => {
     syncWithSharedData();
     alert('✅ Menu synced! All users will see the latest changes.');
+  };
+
+  const handleClearCache = async () => {
+    const confirmed = window.confirm('Clear all cached menu data and reload from server? This will remove any local changes.');
+    if (confirmed) {
+      await clearCacheAndReload();
+      alert('✅ Cache cleared! Menu reloaded from server.');
+    }
   };
 
   const stats = getMenuStats();
@@ -138,6 +147,16 @@ You can use this file to restore the menu if needed.`);
             >
               <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
               Sync Now
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleClearCache}
+              disabled={loading}
+              className="border-white hover:bg-white/10 text-white"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Clear Cache
             </Button>
           </div>
         </div>

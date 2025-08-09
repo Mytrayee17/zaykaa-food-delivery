@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
+      "source": "/menu-data.json",
+      "destination": "/menu-data.json"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
-} 
+}

@@ -1,13 +1,16 @@
 import React from 'react';
-import { MapPin, Clock, Shield, LogOut, Menu } from 'lucide-react';
+import { MapPin, Clock, Shield, LogOut, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocationService } from '@/hooks/useLocationService';
 import { useAdmin } from '@/context/AdminContext';
 import zaykaLogo from '@/assets/zaykaa-logo.png';
+import { useOrder } from '@/context/OrderContext';
 
 const Header: React.FC = () => {
   const { serviceArea } = useLocationService();
   const { isAdmin, openLoginModal, logout } = useAdmin();
+  const { setIsCartOpen, orderItems } = useOrder();
+  const itemCount = orderItems.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
     <header className="bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg relative">
@@ -36,6 +39,20 @@ const Header: React.FC = () => {
               <Clock className="h-4 w-4" />
               <span>30-45 mins delivery</span>
             </div>
+            <Button
+              size="sm"
+              variant="secondary"
+              className="relative text-sm font-semibold"
+              onClick={() => setIsCartOpen(true)}
+            >
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Cart
+              {itemCount > 0 && (
+                <span className="ml-2 inline-flex items-center justify-center rounded-full bg-orange-600 text-white text-xs h-5 px-2">
+                  {itemCount}
+                </span>
+              )}
+            </Button>
             {isAdmin && (
               <Button
                 size="sm"
@@ -55,6 +72,19 @@ const Header: React.FC = () => {
               <Clock className="h-3 w-3" />
               <span>30-45 min</span>
             </div>
+            <Button
+              size="sm"
+              variant="secondary"
+              className="relative text-xs px-2 py-1"
+              onClick={() => setIsCartOpen(true)}
+            >
+              <ShoppingCart className="h-3 w-3" />
+              {itemCount > 0 && (
+                <span className="ml-1 inline-flex items-center justify-center rounded-full bg-orange-600 text-white text-[10px] h-4 px-1.5">
+                  {itemCount}
+                </span>
+              )}
+            </Button>
             {isAdmin && (
               <Button
                 size="sm"
