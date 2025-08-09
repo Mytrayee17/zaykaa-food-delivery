@@ -8,6 +8,8 @@ export interface FoodItem {
   rating?: number;
   isVeg: boolean;
   isOffer: boolean;
+  isBeverage: boolean;
+  isHealthFreak: boolean;
 }
 
 export interface OrderItem extends FoodItem {
