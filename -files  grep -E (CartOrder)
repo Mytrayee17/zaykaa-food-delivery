@@ -1,0 +1,10 @@
+[33m664eb8e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix menu data sync: Add server JSON fetching, update routing, and improve cache management
+[33mc57fdcd[m Add routing configuration to fix 404 errors on page reload
+[33m56465b0[m Update WhatsApp contact number to 8500157859, add Sarvagna Innovations context, and update delivery timing info
+[33m1e603e6[m Update menu data with latest food items
+[33m7c682d1[m Add Health Freak and Beverage filter buttons with TypeScript fixes
+[33m833393d[m Fix menu update system - Replace GitHub-based system with simple shared localStorage - Admin changes now work immediately for all users - Auto-sync every 30 seconds - No complex setup required - Works instantly without external dependencies
+[33mcc2b50e[m Implement GitHub-based shared menu system - Replace localStorage with GitHub JSON file for global menu sharing - Add auto-sync every 30 seconds for real-time updates - Add export functionality for admin to update shared menu data - All users now see the same menu instantly - No more device-specific storage issues
+[33m5c07007[m Simplify admin menu update system - Replace complex file generation with simple Save as Default feature - Add menu statistics dashboard - One-click solution to make changes visible to all users - Much simpler and easier to use
+[33mb0aa1eb[m Add code file update functionality for admin changes
+[33m5ab0de0[m Fix cross-user menu sync issue

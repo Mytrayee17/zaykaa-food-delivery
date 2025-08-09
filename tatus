@@ -1,0 +1,5 @@
+[33m664eb8e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix menu data sync: Add server JSON fetching, update routing, and improve cache management
+[33mc57fdcd[m Add routing configuration to fix 404 errors on page reload
+[33m56465b0[m Update WhatsApp contact number to 8500157859, add Sarvagna Innovations context, and update delivery timing info
+[33m1e603e6[m Update menu data with latest food items
+[33m7c682d1[m Add Health Freak and Beverage filter buttons with TypeScript fixes
