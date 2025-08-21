@@ -131,10 +131,38 @@
       "isOffer": false,
       "isBeverage": false,
       "isHealthFreak": false
+    },
+         {
+      "id": "11",
+      "name": "kajjikayalu (100 grams)",
+      "description": "Kajjikayalu, which is known as the Indian dumpling, is native to Andhra Pradesh. It is also popularly known as Gujiya in the northern part of India. Karanji is either baked or fried or roasted sweets filled with the delicious and luscious mixture of roasted semolina, poppy seeds, nuts, and exquisite and sweet flavored dehydrated coconut, either sugar or jaggery, enlaced with the imbued of cardamom. The crescent fashioned sweet with a crumbly and flaky exterior that is suffused with cardamom aromatized mixture will make it appetizing., bringing you the classic taste of Andhra in every bite.",
+      "price": 65,
+      "image": "https://i0.wp.com/ahahomefoods.com/wp-content/uploads/2023/02/Kajjikayalu-Bellam-Andhra-Style.jpg?fit=600%2C600&ssl=1",
+      "category": "Beverges",
+      "rating": 4.9,
+      "isVeg": true,
+      "isOffer": false,
+      "isBeverage": false,
+      "isHealthFreak": false
+    },
+       {
+      "id": "12",
+      "name": "ppure ghee arisel (1 kg)",
+      "description": "Nethi Ariselu, also known as Ariselu or Adhirasam, is a beloved traditional sweet from Andhra Pradesh. Made with rice flour, jaggery, and pure ghee, these soft and chewy rice cakes are deeply rooted in Andhra’s festive culture. Each Ariselu is hand-pressed to perfection, offering a rich, mildly sweet flavor with a delightful ghee aroma.
+
+These golden brown, soft, and delicious treats are commonly prepared during festivals like Sankranti, Dussehra, and weddings. With their authentic, homemade taste, Nethi Ariselu is the perfect indulgence for any sweet lover., bringing you the classic taste of Andhra in every bite.",
+      "price": 300,
+      "image": "https://i0.wp.com/foodonfarmpickles.com/wp-content/uploads/2024/11/1000161920.jpg?fit=783%2C712&ssl=1",
+      "category": "Beverges",
+      "rating": 4.7,
+      "isVeg": true,
+      "isOffer": false,
+      "isBeverage": false,
+      "isHealthFreak": false
     }
     
   ],
-  "totalItems": 10,
+  "totalItems": 13,
   "categories": ["Main Course", "Rice", "Bread", "Dal", "Starter", "Dessert", "Beverage"],
   "offers": 3,
   "vegItems": 5
