@@ -116,7 +116,6 @@
       "isVeg": true,
       "isOffer": true,
       "isBeverage": false,
-<<<<<<< HEAD
       "isHealthFreak": false
     },
        {
@@ -148,9 +147,7 @@
        {
       "id": "12",
       "name": "ppure ghee arisel (1 kg)",
-      "description": "Nethi Ariselu, also known as Ariselu or Adhirasam, is a beloved traditional sweet from Andhra Pradesh. Made with rice flour, jaggery, and pure ghee, these soft and chewy rice cakes are deeply rooted in Andhra’s festive culture. Each Ariselu is hand-pressed to perfection, offering a rich, mildly sweet flavor with a delightful ghee aroma.
-
-These golden brown, soft, and delicious treats are commonly prepared during festivals like Sankranti, Dussehra, and weddings. With their authentic, homemade taste, Nethi Ariselu is the perfect indulgence for any sweet lover., bringing you the classic taste of Andhra in every bite.",
+      "description": "Nethi Ariselu, also known as Ariselu or Adhirasam, is a beloved traditional sweet from Andhra Pradesh. Made with rice flour, jaggery, and pure ghee, these soft and chewy rice cakes are deeply rooted in Andhra’s festive culture. Each Ariselu is hand-pressed to perfection, offering a rich, mildly sweet flavor with a delightful ghee aroma.These golden brown, soft, and delicious treats are commonly prepared during festivals like Sankranti, Dussehra, and weddings. With their authentic, homemade taste, Nethi Ariselu is the perfect indulgence for any sweet lover., bringing you the classic taste of Andhra in every bite.",
       "price": 300,
       "image": "https://i0.wp.com/foodonfarmpickles.com/wp-content/uploads/2024/11/1000161920.jpg?fit=783%2C712&ssl=1",
       "category": "Beverges",
@@ -159,10 +156,10 @@ These golden brown, soft, and delicious treats are commonly prepared during fest
       "isOffer": false,
       "isBeverage": false,
       "isHealthFreak": false
-    }
+    },
     
   ],
-  "totalItems": 13,
+  "totalItems": 12,
   "categories": ["Main Course", "Rice", "Bread", "Dal", "Starter", "Dessert", "Beverage"],
   "offers": 3,
   "vegItems": 5
